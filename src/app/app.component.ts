@@ -8,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'material-angular';
+  links = [
+    { path: '/home', label: 'Home', icon: 'apps'}
+  ];
+  events: string[] = [];
+  opened: boolean;
 }
