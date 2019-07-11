@@ -1,16 +1,14 @@
 <div class="app-container" >
   <mat-toolbar color="primary">
-      <!-- <mat-toolbar-row> -->
-        <span>{{title}}</span>
-        <span class="toolbar-spacer"></span>
-        <mat-icon
-          class="toolbar-icon"
-          aria-label="menu"
-          (click)="sidenav.toggle()"
-        >
-          menu
-        </mat-icon>
-      <!-- </mat-toolbar-row> -->
+    <span>{{app}}</span>
+    <span class="toolbar-spacer"></span>
+    <mat-icon
+      class="toolbar-icon"
+      aria-label="menu"
+      (click)="sidenav.toggle()"
+    >
+      menu
+    </mat-icon>
   </mat-toolbar>
 
   <mat-sidenav-container >
@@ -34,9 +32,10 @@
       </nav>
     </mat-sidenav>
     <mat-sidenav-content>
-        <div class="app-content">
-          <router-outlet #routerOutlet="outlet"></router-outlet>
-        </div>
+      <div class="app-content">
+        <h1 class="display-1">{{title}}</h1>
+        <router-outlet #routerOutlet="outlet"></router-outlet>
+      </div>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>

@@ -12,15 +12,18 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomeComponent } from './home/home.component';
 import { ItemsComponent } from './items/items.components';
+import { ListComponent } from './list/list.component';
+import { ChildListComponent } from './list/child-list/child-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     PageNotFoundComponent,
     HomeComponent,
-    ItemsComponent
+    ItemsComponent,
+    ListComponent,
+    ChildListComponent
   ],
-
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
@@ -28,7 +31,6 @@ import { ItemsComponent } from './items/items.components';
     AppRoutingModule,
     HttpClientModule
   ],
-
   providers: [],
   bootstrap: [AppComponent]
 })
