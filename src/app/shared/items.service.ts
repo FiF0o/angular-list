@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { ItemInterface } from './item.model'
+import { map } from 'rxjs/operators';
+
+import { ItemInterface } from './item.model';
 
 const BASE_URL = 'http://localhost:3000/api/items'
 
@@ -16,5 +18,14 @@ export class ItemsService {
 
   getAll() {
     return this.http.get<ItemInterface>(BASE_URL)
+  }
+
+  loadItem(id: number | string) {
+    return this.http.get(`${BASE_URL}`)
+      .pipe(
+        map((items: ItemInterface[]) =>
+          // + turns string into number
+          items.find(item => item.id === +id))
+      )
   }
 }

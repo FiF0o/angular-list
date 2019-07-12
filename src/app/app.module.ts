@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomeComponent } from './home/home.component';
 import { ItemsComponent } from './items/items.components';
+import { ItemsDetailsComponent } from './items/details/item.component';
 import { ListComponent } from './list/list.component';
 import { ChildListComponent } from './list/child-list/child-list.component';
 
@@ -22,7 +23,8 @@ import { ChildListComponent } from './list/child-list/child-list.component';
     HomeComponent,
     ItemsComponent,
     ListComponent,
-    ChildListComponent
+    ChildListComponent,
+    ItemsDetailsComponent
   ],
   imports: [
     BrowserAnimationsModule,
