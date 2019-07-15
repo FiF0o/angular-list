@@ -1,0 +1,45 @@
+<h2 class="mat-display-2">
+  <!-- if we select an item with show edit otherwise we are in "create mode" -->
+  <span *ngIf="selectedItem.id; else prompt" >Editing {{originalName}}</span>
+  <ng-template #prompt>Create</ng-template>
+</h2>
+<form
+  (submit)="saved.emit(selectedItem)"
+>
+  <input
+    type="text"
+    placeholder="Name"
+    [(ngModel)]="selectedItem.name"
+    name="name"
+    mdInput
+  >
+  <input
+    type="text"
+    placeholder="Heading"
+    [(ngModel)]="selectedItem.heading"
+    name="heading"
+    mdInput
+  >
+  <input
+    type="text"
+    placeholder="Description"
+    [(ngModel)]="selectedItem.description"
+    name="description"
+    mdInput
+  >
+  <button
+    type="submit"
+    md-button
+  >
+    Save
+  </button>
+  <button
+    type="button"
+    (click)="cancelled.emit(selectedItem)"
+    md-button 
+  >
+    Cancel
+  </button>
+  <br>
+  {{selectedItem | json}}
+</form>

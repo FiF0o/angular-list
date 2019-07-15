@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { Router } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppMaterialModule } from './app-material.module';
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +16,7 @@ import { ItemsComponent } from './items/items.components';
 import { ItemsDetailsComponent } from './items/details/item.component';
 import { ListComponent } from './list/list.component';
 import { ChildListComponent } from './list/child-list/child-list.component';
+import { CreateItem } from './items/create/create.component';
 
 @NgModule({
   declarations: [
@@ -24,14 +26,17 @@ import { ChildListComponent } from './list/child-list/child-list.component';
     ItemsComponent,
     ListComponent,
     ChildListComponent,
-    ItemsDetailsComponent
+    ItemsDetailsComponent,
+    CreateItem
   ],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
     AppMaterialModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

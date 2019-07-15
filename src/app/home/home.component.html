@@ -1,5 +1,11 @@
 <div>
-  <div class="col-50">Create</div>
+  <div class="col-50">
+    <create-item
+      [item]="currentItem"
+      (saved)="saveItem($event)"
+      (cancelled)="cancelItem($event)"
+    ></create-item>
+  </div>
   <div class="col-50">
     <app-list></app-list>
   </div>
