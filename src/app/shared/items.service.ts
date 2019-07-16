@@ -22,7 +22,7 @@ export class ItemsService {
   }
 
   getAll() {
-    return this.http.get<ItemInterface>(BASE_URL)
+    return this.http.get<ItemInterface[]>(BASE_URL)
   }
 
   loadItem(id: number | string) {
@@ -40,4 +40,7 @@ export class ItemsService {
     return this.http.post<ItemInterface>(`${BASE_URL}`, item, httpOptions)
   }
 
+  delete(id: number): Observable<{}> {
+    return this.http.delete(`${BASE_URL}/${id}`)
+  }
 }

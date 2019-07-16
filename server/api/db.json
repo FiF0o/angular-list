@@ -29,42 +29,6 @@
       "name": "Blue Item",
       "heading": "blsabla",
       "description": "This is a blue item"
-    },
-    {
-      "id": 6,
-      "name": "Indigo Item",
-      "heading": "blsabla",
-      "description": "This is a indigo item"
-    },
-    {
-      "id": 7,
-      "name": "Violet Item",
-      "heading": "blsabla",
-      "description": "This is a violet item"
-    },
-    {
-      "id": 8,
-      "name": "Another item",
-      "heading": "This is a very long heading",
-      "description": "This is a violet item, djfsjddlkfdlsdfkmkk, fddwfsdfdsfsdfds"
-    },
-    {
-      "id": 208,
-      "name": "dfdfds",
-      "heading": "adfsdfds",
-      "description": "adsfsdfsdds"
-    },
-    {
-      "id": 890,
-      "name": "a",
-      "heading": "a",
-      "description": "a"
-    },
-    {
-      "id": 450,
-      "name": "aasfadfadfda",
-      "heading": "asdfsdfsdfds",
-      "description": "sdfsdfdsfsdfsdfsd"
     }
   ]
 }

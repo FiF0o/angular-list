@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ItemInterface } from 'src/app/shared';
 
 @Component({
@@ -17,7 +17,7 @@ import { ItemInterface } from 'src/app/shared';
       <button 
         mat-icon-button
         aria-label="remove"
-        (click)="onDelete(); $event.stopPropagation()"
+        (click)="deleted.emit(item.id); $event.stopPropagation()"
       >
         <mat-icon>delete_outline</mat-icon>
       </button>
@@ -28,9 +28,9 @@ import { ItemInterface } from 'src/app/shared';
 })
 export class ChildListComponent {
   @Input() items: ItemInterface[]
-  onDelete() {
-    console.log('deleted!')
-  }
+
+  @Output() deleted = new EventEmitter()
+
   viewItem() {
     console.log('clicked view!')
   }

@@ -2,5 +2,6 @@
 <h2 class="mat-display-2">{{title}}</h2>
 <child-list
   [items]="items"
+  (deleted)="deleteItem($event)"
 >
 </child-list>

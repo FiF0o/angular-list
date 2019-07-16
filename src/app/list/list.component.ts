@@ -19,9 +19,18 @@ export class ListComponent implements OnInit {
   getItems() {
     return this.itemsService.getAll()
       .subscribe(
-        (data: ItemInterface) =>
+        (data: ItemInterface[]) =>
           this.items = [...data],
           e => console.error(e)
       )
   }
+
+  deleteItem(id) {
+    this.itemsService.delete(id)
+      .subscribe(response => {
+        // rehydrate and get the latest list
+        this.itemsService.getAll()
+      });
+  }
+
 }

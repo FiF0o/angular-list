@@ -42,4 +42,5 @@ export class HomeComponent implements OnInit {
   resetCurrentItem() {
     this.currentItem = { id: null, name: '', heading: '', description: '' };
   }
+
 }
