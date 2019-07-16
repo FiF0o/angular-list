@@ -1,12 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 
 import { ItemInterface } from './item.model';
+import { Observable } from 'rxjs';
 
-const BASE_URL = 'http://localhost:3000/api/items'
-
+const BASE_URL = 'http://localhost:3000/api/items';
+const httpOptions = {
+  headers : new HttpHeaders({
+    'Content-Type': 'application/json'
+  })
+}
 
 @Injectable()
 export class ItemsService {
@@ -28,4 +33,11 @@ export class ItemsService {
           items.find(item => item.id === +id))
       )
   }
+
+  create(item: ItemInterface): Observable<ItemInterface> {
+    console.log('posting', item)
+    //TODO Pipe and add catch error
+    return this.http.post<ItemInterface>(`${BASE_URL}`, item, httpOptions)
+  }
+
 }

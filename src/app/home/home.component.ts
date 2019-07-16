@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { ItemInterface } from '../shared';
+import { ItemInterface, ItemsService } from '../shared';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
-
+  providers: [ItemsService]
 })
 export class HomeComponent implements OnInit {
   currentItem: ItemInterface;
   itemCopy: ItemInterface;
+
+  constructor(
+    private itemsService: ItemsService
+  ) {}
 
   ngOnInit() {
     // if we don't set the item to null in the form
@@ -22,8 +26,13 @@ export class HomeComponent implements OnInit {
     this.itemCopy = Object.assign({}, item, {
       id: Math.floor(Math.random() * 1000),
     })
-    console.log('saved!')
-    console.log(this.itemCopy)
+    this.itemsService.create(this.itemCopy)
+      .subscribe(response =>{
+        console.log(JSON.stringify(response), 'saved!')
+        // rehydrate state with new items and reset current item text fields
+        this.itemsService.getAll()
+        this.resetCurrentItem()
+      })
   }
 
   cancelItem(item) {
