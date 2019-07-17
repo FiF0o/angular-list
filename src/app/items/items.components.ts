@@ -22,7 +22,9 @@ export class ItemsComponent implements OnInit {
   getItems() {
     return this.itemsService.all()
       .subscribe((data: ItemInterface[])  => {
-        this.items = [...data]
+        this.items = [...data],
+        // catching error in the front end for now as we are not concerned to know whether the backend has failed yet.
+        error => console.error(error)
       })
   }
 }
