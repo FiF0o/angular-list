@@ -6,37 +6,47 @@
 <form
   (submit)="saved.emit(selectedItem)"
 >
-  <input
-    type="text"
-    placeholder="Name"
-    [(ngModel)]="selectedItem.name"
-    name="name"
-    mdInput
-  >
-  <input
+  <mat-form-field class="form-full-width">
+    <input
+      type="text"
+      placeholder="Name"
+      [(ngModel)]="selectedItem.name"
+      name="name"
+      matInput
+    >
+  </mat-form-field>
+  <br>
+  <mat-form-field class="form-full-width">
+    <input
     type="text"
     placeholder="Heading"
     [(ngModel)]="selectedItem.heading"
     name="heading"
-    mdInput
-  >
-  <input
-    type="text"
-    placeholder="Description"
-    [(ngModel)]="selectedItem.description"
-    name="description"
-    mdInput
-  >
+    matInput
+    >
+  </mat-form-field>
+  <br>
+  <mat-form-field class="form-full-width">
+    <input
+      type="text"
+      placeholder="Description"
+      [(ngModel)]="selectedItem.description"
+      name="description"
+      matInput
+    >
+  </mat-form-field>
+  <br>
   <button
+    mat-raised-button
     type="submit"
     md-button
   >
     Save
   </button>
   <button
+    mat-button
     type="button"
     (click)="cancelled.emit(selectedItem)"
-    md-button 
   >
     Cancel
   </button>
