@@ -51,5 +51,19 @@
     Cancel
   </button>
   <br>
-  <!-- {{selectedItem | json}} -->
+  <br>
+  <br>
+  <mat-card
+    *ngIf="selectedItem.name;"
+    class="example-card"
+    id={{selectedItem.id}}
+  >
+    <mat-card-title>{{selectedItem.name}}</mat-card-title>
+    <mat-card-subtitle>{{selectedItem.heading}}</mat-card-subtitle>
+    <mat-card-content>
+      <p>
+        {{selectedItem.description}}
+      </p>
+    </mat-card-content>
+  </mat-card>
 </form>
