@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
     // setting a prop [item] to be passed down in the form
     this.resetCurrentItem();
   }
+
   saveItem(item) {
     // temporary, creating a 'unique number'
     this.itemCopy = Object.assign({}, item, {
@@ -43,4 +44,7 @@ export class HomeComponent implements OnInit {
     this.currentItem = { id: null, name: '', heading: '', description: '' };
   }
 
+  selectItem(item) {
+    this.currentItem = item
+  }
 }

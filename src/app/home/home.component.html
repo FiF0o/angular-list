@@ -7,6 +7,8 @@
     ></create-item>
   </div>
   <div class="col-50">
-    <app-list></app-list>
+    <app-list
+      (selected)="selectItem($event)"
+    ></app-list>
   </div>
 </div>

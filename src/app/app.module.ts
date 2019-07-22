@@ -15,7 +15,6 @@ import { HomeComponent } from './home/home.component';
 import { ItemsComponent } from './items/items.components';
 import { ItemsDetailsComponent } from './items/details/item.component';
 import { ListComponent } from './list/list.component';
-import { ChildListComponent } from './list/child-list/child-list.component';
 import { CreateItem } from './items/create/create.component';
 
 @NgModule({
@@ -25,7 +24,6 @@ import { CreateItem } from './items/create/create.component';
     HomeComponent,
     ItemsComponent,
     ListComponent,
-    ChildListComponent,
     ItemsDetailsComponent,
     CreateItem
   ],

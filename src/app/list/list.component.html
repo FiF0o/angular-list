@@ -1,7 +1,20 @@
-<!-- passing props down -->
 <h2 class="mat-display-2">{{title}}</h2>
-<child-list
-  [items]="items"
-  (deleted)="deleteItem($event)"
->
-</child-list>
+<mat-action-list>
+    <mat-list-item
+      *ngFor="let item of items"
+      (click)="selected.emit(item);"
+    >
+      <h3 matLine> {{item.name}} </h3>
+      <p matLine>
+        <span class="demo-2">{{item.description}}</span>
+      </p>
+      <!-- stop propagation as the even will bubble up -->
+      <button
+        mat-icon-button
+        aria-label="remove"
+        (click)="deleteItem(item.id); $event.stopPropagation()"
+      >
+        <mat-icon>delete_outline</mat-icon>
+      </button>
+    </mat-list-item>
+  </mat-action-list>

@@ -1,4 +1,4 @@
-import { OnInit, Component } from "@angular/core";
+import {Component, Output, EventEmitter, OnInit, Input } from "@angular/core";
 import { ItemsService, ItemInterface } from '../shared'
 
 @Component({
@@ -10,7 +10,10 @@ import { ItemsService, ItemInterface } from '../shared'
 export class ListComponent implements OnInit {
   items: ItemInterface[]
   title: string = 'Your list of items'
-  constructor(private itemsService: ItemsService){}
+
+  @Output() selected = new EventEmitter()
+
+  constructor(private itemsService: ItemsService) {}
 
   ngOnInit() {
     this.getItems()
