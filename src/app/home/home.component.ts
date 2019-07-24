@@ -10,6 +10,7 @@ import { ItemInterface, ItemsService } from '../shared';
 export class HomeComponent implements OnInit {
   currentItem: ItemInterface;
   itemCopy: ItemInterface;
+  items: ItemInterface[]
 
   constructor(
     private itemsService: ItemsService
@@ -46,5 +47,9 @@ export class HomeComponent implements OnInit {
 
   selectItem(item) {
     this.currentItem = item
+  }
+
+  handleResults(items) {
+    this.items = items
   }
 }

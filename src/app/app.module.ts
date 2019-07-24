@@ -13,6 +13,7 @@ import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomeComponent } from './home/home.component';
 import { ItemsComponent } from './items/items.components';
+import { ItemsSearchComponent } from './items/search/items-search.component'
 import { ItemsDetailsComponent } from './items/details/item.component';
 import { ListComponent } from './list/list.component';
 import { CreateItem } from './items/create/create.component';
@@ -25,7 +26,8 @@ import { CreateItem } from './items/create/create.component';
     ItemsComponent,
     ListComponent,
     ItemsDetailsComponent,
-    CreateItem
+    CreateItem,
+    ItemsSearchComponent
   ],
   imports: [
     BrowserAnimationsModule,

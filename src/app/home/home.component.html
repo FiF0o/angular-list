@@ -7,7 +7,12 @@
     ></create-item>
   </div>
   <div class="col-50">
+    <app-search-items
+      (onResults)="handleResults($event)"
+    ></app-search-items>
+    <br>
     <app-list
+      [items]="items"
       (selected)="selectItem($event)"
     ></app-list>
   </div>

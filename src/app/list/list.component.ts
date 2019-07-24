@@ -8,9 +8,8 @@ import { ItemsService, ItemInterface } from '../shared'
   providers: [ItemsService]
 })
 export class ListComponent implements OnInit {
-  items: ItemInterface[]
   title: string = 'Your list of items'
-
+  @Input() items: ItemInterface[]
   @Output() selected = new EventEmitter()
 
   constructor(private itemsService: ItemsService) {}

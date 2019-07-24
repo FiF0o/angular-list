@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-
-import { map, catchError } from 'rxjs/operators';
+import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams} from '@angular/common/http';
 
 import { ItemInterface } from './item.model';
-import { Observable, throwError } from 'rxjs';
 
-const BASE_URL = 'http://localhost:3000/api/items';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+
+const BASE_URL = 'http://localhost:3000/items/';
 const httpOptions = {
   headers : new HttpHeaders({
     'Content-Type': 'application/json'
@@ -60,6 +60,15 @@ export class ItemsService {
   }
 
   delete(id: number): Observable<{}> {
-    return this.http.delete(`${BASE_URL}/${id}`)
+    return this.http.delete(`${BASE_URL}${id}`)
   }
+
+  search(term: string): Observable<ItemInterface[]>{
+    term = term.trim()
+    const options = term ?
+    { params: new HttpParams().set('q', term) } : {}
+
+    return this.http.get<ItemInterface[]>(`${BASE_URL}`, options)
+  }
+
 }
