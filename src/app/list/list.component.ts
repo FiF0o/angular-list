@@ -31,7 +31,7 @@ export class ListComponent implements OnInit {
     this.itemsService.delete(id)
       .subscribe(response => {
         // rehydrate and get the latest list
-        this.itemsService.getAll()
+        this.getItems()
       });
   }
 

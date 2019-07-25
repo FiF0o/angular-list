@@ -32,9 +32,14 @@ export class HomeComponent implements OnInit {
       .subscribe(response =>{
         console.log(JSON.stringify(response), 'saved!')
         // rehydrate state with new items and reset current item text fields
-        this.itemsService.getAll()
+        this.getItems()
         this.resetCurrentItem()
       })
+  }
+
+  getItems() {
+    this.itemsService.getAll()
+      .subscribe(items => this.items = [...items])
   }
 
   cancelItem(item) {
