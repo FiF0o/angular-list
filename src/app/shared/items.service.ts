@@ -33,12 +33,11 @@ export class ItemsService {
     return throwError('Something bad happened; please try again later. 😭');
   };
 
-  all() {
-    return this.http.get(BASE_URL)
-  }
-
   getAll() {
     return this.http.get<ItemInterface[]>(BASE_URL)
+      .pipe(
+        catchError(this.handleError)
+      )
   }
 
   loadItem(id: number | string) {
@@ -46,7 +45,8 @@ export class ItemsService {
       .pipe(
         map((items: ItemInterface[]) =>
           // + turns string into number
-          items.find(item => item.id === +id))
+          items.find(item => item.id === +id)),
+          catchError(this.handleError)
       )
   }
 
@@ -69,6 +69,9 @@ export class ItemsService {
     { params: new HttpParams().set('q', term) } : {}
 
     return this.http.get<ItemInterface[]>(`${BASE_URL}`, options)
+      .pipe(
+        catchError(this.handleError)
+        )
   }
 
 }
