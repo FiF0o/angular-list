@@ -12,7 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomeComponent } from './home/home.component';
-import { ItemsComponent } from './items/items.components';
+import { ItemsComponent } from './items/cards/items.components';
 import { ItemsSearchComponent } from './items/search/items-search.component'
 import { ItemsDetailsComponent } from './items/details/item.component';
 import { ListComponent } from './list/list.component';

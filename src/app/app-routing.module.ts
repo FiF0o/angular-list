@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { HomeComponent } from './home/home.component';
-import { ItemsComponent } from './items/items.components';
+import { ItemsComponent } from './items/cards/items.components';
 import { ItemsDetailsComponent } from './items/details/item.component';
 import { ListComponent } from './list/list.component';
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ItemInterface } from '../shared/item.model';
-import { ItemsService } from '../shared/items.service';
+import { ItemInterface } from '../../shared/item.model';
+import { ItemsService } from '../../shared/items.service';
 
 @Component({
   selector: 'items-component',
