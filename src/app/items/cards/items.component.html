@@ -22,6 +22,9 @@
             {{item.description}}
           </p>
         </mat-card-content>
+        <mat-card-actions>
+          <a mat-button routerLink="/item/{{item.id}}">VIEW</a>
+        </mat-card-actions>
       </mat-card>
   </mat-grid-tile>
 </mat-grid-list>

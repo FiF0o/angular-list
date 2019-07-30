@@ -5,8 +5,7 @@ import { ItemsRoutingModule } from './items-routing.module';
 
 import { ItemsComponent } from './cards/items.components';
 
-import { MatCardModule, MatGridListModule } from '@angular/material';
-// console.log(MatCardModule)
+import { MatCardModule, MatGridListModule, MatButtonModule } from '@angular/material';
 
 
 @NgModule({
@@ -17,11 +16,13 @@ import { MatCardModule, MatGridListModule } from '@angular/material';
     CommonModule,
     ItemsRoutingModule,
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    MatButtonModule
   ],
   exports: [
     MatCardModule,
-    MatGridListModule
+    MatGridListModule,
+    MatButtonModule
   ]
 })
 export class ItemsModule { }
