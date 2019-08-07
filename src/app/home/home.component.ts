@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
 
   getItems() {
     this.itemsService.getAll()
-      .subscribe(items => this.items = [...items])
+      .subscribe((items: ItemInterface[]) => this.items = [...items])
   }
 
   cancelItem(item) {
