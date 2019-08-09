@@ -29,6 +29,20 @@ describe('Service: Items', () => {
     expect(httpClientSpy.get.calls.count()).toBe(1)
   })
 
+  it('should return the expected item when loadItem() is called with an item id', () => {
+    const id = 1
+    const expectedItem = {
+      id
+    }
+
+    httpClientSpy.get.and.returnValue(asyncData(expectedItem));
+
+    itemsService.loadItem(id).subscribe(
+      item => expect(item).toEqual(expectedItem),
+      fail
+    );
+  });
+
   it('should return an error when the server returns a 404', () => {
     const expectedError = 'test 404 error'
     const errorResponse = new HttpErrorResponse({
