@@ -4,19 +4,25 @@ import { HttpClient, HttpHeaders, HttpErrorResponse, HttpParams} from '@angular/
 import { ItemInterface } from './item.model';
 
 import { Observable } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, tap } from 'rxjs/operators';
 
-const BASE_URL = 'http://localhost:3000/items/';
 const httpOptions = {
   headers : new HttpHeaders({
     'Content-Type': 'application/json'
   })
 }
 
+
 @Injectable()
 export class ItemsService {
+  readonly ITEMS_API_URL = 'http://localhost:3000/items/';
+
   constructor(private http: HttpClient) {}
   
+  private log (message: string) {
+    console.log('ItemsService: ' + message)
+  }
+
   private handleError<T> (operation = 'operation') {
     return (error: HttpErrorResponse): Observable<T> => {
 
@@ -32,34 +38,37 @@ export class ItemsService {
 
   }
 
-  getAll() {
-    return this.http.get<ItemInterface[]>(BASE_URL)
+  getAll(): Observable<ItemInterface[]> {
+    return this.http.get<ItemInterface[]>(`${this.ITEMS_API_URL}`)
       .pipe(
+        tap(items => this.log('fetched items')),
         catchError(this.handleError('getAll'))
-      )
+      ) as Observable<ItemInterface[]>
   }
 
-  loadItem(id: number | string) {
-    return this.http.get(`${BASE_URL}`)
+  loadItem<Data>(id: number | string): Observable<ItemInterface> {
+    return this.http.get<ItemInterface[]>(`${this.ITEMS_API_URL}?id=${id}`)
       .pipe(
-        map((items: ItemInterface[]) =>
-          // + turns string into number
-          items.find(item => item.id === +id)),
-          catchError(this.handleError)
+        map((items: ItemInterface[]) => items[0]),
+        tap(item => {
+          const searchRes = item ? `fetched` : `did not find`
+          this.log(`${searchRes} item id=${JSON.stringify(item)}`)
+        }),
+        catchError(this.handleError)
       )
   }
 
   create(item: ItemInterface): Observable<ItemInterface> {
     console.log('posting', item)
     //TODO Pipe and add catch error
-    return this.http.post<ItemInterface>(`${BASE_URL}`, item, httpOptions)
+    return this.http.post<ItemInterface>(`${this.ITEMS_API_URL}`, item, httpOptions)
       .pipe(
         catchError(this.handleError)
       )
   }
 
   delete(id: number): Observable<{}> {
-    return this.http.delete(`${BASE_URL}${id}`)
+    return this.http.delete(`${this.ITEMS_API_URL}${id}`)
   }
 
   search(term: string): Observable<ItemInterface[]>{
@@ -67,7 +76,7 @@ export class ItemsService {
     const options = term ?
     { params: new HttpParams().set('q', term) } : {}
 
-    return this.http.get<ItemInterface[]>(`${BASE_URL}`, options)
+    return this.http.get<ItemInterface[]>(`${this.ITEMS_API_URL}`, options)
       .pipe(
         catchError(this.handleError)
         )
