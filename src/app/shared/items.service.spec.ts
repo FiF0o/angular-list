@@ -7,64 +7,80 @@ import { ItemInterface } from './item.model';
 
 import { asyncData, asyncError } from '../testing/async-observable-helpers'
 
-let httpClientSpy: { get: jasmine.Spy };
-let itemsService: ItemsService;
+
 
 describe('Service: Items', () => {
-  beforeEach(() => {
-    httpClientSpy = jasmine.createSpyObj('HttpClient', ['get'])
-    itemsService = new ItemsService(<any> httpClientSpy)
+
+
+  describe('ItemsService (with stubs and spies)', () => {
+    let httpClientSpy: { get: jasmine.Spy };
+    let itemsService: ItemsService;
+
+    beforeEach(() => {
+      httpClientSpy = jasmine.createSpyObj('HttpClient', ['get'])
+      itemsService = new ItemsService(<any> httpClientSpy)
+    })
+
+    describe('getAll()', () => {
+      it('should return expected items (HttpClient called once)', () => {
+        const expectedItems: ItemInterface[] = [
+          {id: 1},
+          {id: 2}
+        ]
+        httpClientSpy.get.and.returnValue(asyncData(expectedItems))
+
+        itemsService.getAll().subscribe(
+          items => expect(items).toEqual(expectedItems),
+          fail
+        )
+
+        expect(httpClientSpy.get.calls.count()).toBe(1)
+      })
+
+      it('should return the expected item when loadItem() is called with an item id', (done) => {
+        const expectedItem = {
+          id: 1
+        }
+        const mockData = [
+          {id: 1},
+          {id: 2}
+        ]
+
+        httpClientSpy.get.and.returnValue(asyncData(mockData));
+
+        itemsService.loadItem(expectedItem.id).subscribe(
+          item => {
+            expect(item).toEqual(expectedItem)
+            done()
+          },
+          fail
+        );
+      });
+
+      it('should return an error when the server returns a 404', (done) => {
+        const expectedError = 'test 404 error'
+        const errorResponse = new HttpErrorResponse({
+          error: expectedError,
+          status: 404,
+          statusText: '💩'
+        });
+
+        httpClientSpy.get.and.returnValue(asyncError(errorResponse));
+
+        itemsService.getAll().subscribe(
+          _ => fail('expected an error, not heroes'),
+          error  => {
+            expect(error.message).toContain(expectedError)
+            done()
+          }
+        );
+      });
+
+    })
   })
 
-  it('should return expected items (HttpClient called once)', () => {
-    const expectedItems: ItemInterface[] = [
-      {id: 1},
-      {id: 2}
-    ]
-    httpClientSpy.get.and.returnValue(asyncData(expectedItems))
 
-    itemsService.getAll().subscribe(
-      items => expect(items).toEqual(expectedItems),
-      fail
-    )
-
-    expect(httpClientSpy.get.calls.count()).toBe(1)
-  })
-
-  it('should return the expected item when loadItem() is called with an item id', () => {
-    const expectedItem = {
-      id: 1
-    }
-    const mockData = [
-      {id: 1},
-      {id: 2}
-    ]
-
-    httpClientSpy.get.and.returnValue(asyncData(mockData));
-
-    itemsService.loadItem(expectedItem.id).subscribe(
-      item => expect(item).toEqual(expectedItem),
-      fail
-    );
-  });
-
-  it('should return an error when the server returns a 404', () => {
-    const expectedError = 'test 404 error'
-    const errorResponse = new HttpErrorResponse({
-      error: expectedError,
-      status: 404,
-      statusText: '💩'
-    });
-
-    httpClientSpy.get.and.returnValue(asyncError(errorResponse));
-
-    itemsService.getAll().subscribe(
-      _ => fail('expected an error, not heroes'),
-      error  => expect(error.message).toContain(expectedError)
-    );
-  });
-
-  describe('HeroesService (with mocks)', () => {
+  describe('ItemsService (with mocks)', () => {
     let httpClient: HttpClient;
     let httpTestingController: HttpTestingController;
     let itemsService: ItemsService;
@@ -114,8 +130,53 @@ describe('Service: Items', () => {
         req.flush(expectedItems);
       });
 
+      it('should return no items', () => {
+        itemsService.getAll().subscribe(
+          items => expect(items.length).toEqual(0),
+          fail
+        )
+
+        // Sending and empty response
+        httpTestingController.expectOne(itemsService.ITEMS_API_URL)
+        .flush([])
+      })
+
+      it('should return an user friendly message when there is a 404 status code', () => {
+        const expectedErrorMessage = 'Ouch 404'
+
+        itemsService.getAll().subscribe(
+          items => fail('💥 error'),
+          error => expect(error.message).toContain(expectedErrorMessage)
+        )
+
+        const req = httpTestingController.expectOne(itemsService.ITEMS_API_URL)
+        req.flush(expectedErrorMessage, {status: 404, statusText: 'Not Found'})
+      })
+
+      it('should return expected itemss when called multiple times', () => {
+        const expectedSingleResponse = [{id: 1}]
+
+        itemsService.getAll().subscribe()
+        itemsService.getAll().subscribe(
+          item => expect(item).toEqual(expectedSingleResponse),
+          fail
+        )
+        itemsService.getAll().subscribe(
+          items => expect(items).toEqual(expectedItems),
+          fail
+        )
+
+        const requests = httpTestingController.match(itemsService.ITEMS_API_URL)
+
+        requests[0].flush([])
+        requests[1].flush(expectedSingleResponse)
+        requests[2].flush(expectedItems)
+        expect(requests.length).toEqual(3);
+      })
+
     })
 
   })
+
 
 })
