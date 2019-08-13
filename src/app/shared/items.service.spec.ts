@@ -18,14 +18,14 @@ describe('Service: Items', () => {
 
     beforeEach(() => {
       httpClientSpy = jasmine.createSpyObj('HttpClient', ['get'])
-      itemsService = new ItemsService(<any> httpClientSpy)
+      itemsService = new ItemsService(<any>httpClientSpy)
     })
 
     describe('getAll()', () => {
       it('should return expected items (HttpClient called once)', () => {
         const expectedItems: ItemInterface[] = [
-          {id: 1},
-          {id: 2}
+          { id: 1 },
+          { id: 2 }
         ]
         httpClientSpy.get.and.returnValue(asyncData(expectedItems))
 
@@ -42,8 +42,8 @@ describe('Service: Items', () => {
           id: 1
         }
         const mockData = [
-          {id: 1},
-          {id: 2}
+          { id: 1 },
+          { id: 2 }
         ]
 
         httpClientSpy.get.and.returnValue(asyncData(mockData));
@@ -69,7 +69,7 @@ describe('Service: Items', () => {
 
         itemsService.getAll().subscribe(
           _ => fail('expected an error, not heroes'),
-          error  => {
+          error => {
             expect(error.message).toContain(expectedError)
             done()
           }
@@ -88,9 +88,9 @@ describe('Service: Items', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         // Import the HttpClient mocking services
-        imports: [ HttpClientTestingModule ],
+        imports: [HttpClientTestingModule],
         // Provide the service-under-test
-        providers: [ ItemsService ]
+        providers: [ItemsService]
       });
 
       // Inject the http, test controller, and service-under-test
@@ -113,7 +113,7 @@ describe('Service: Items', () => {
         expectedItems = [
           { id: 1, name: 'A' },
           { id: 2, name: 'B' },
-         ] as ItemInterface[];
+        ] as ItemInterface[];
       });
 
       it('should return expected items (called once)', () => {
@@ -138,7 +138,7 @@ describe('Service: Items', () => {
 
         // Sending and empty response
         httpTestingController.expectOne(itemsService.ITEMS_API_URL)
-        .flush([])
+          .flush([])
       })
 
       it('should return an user friendly message when there is a 404 status code', () => {
@@ -150,11 +150,11 @@ describe('Service: Items', () => {
         )
 
         const req = httpTestingController.expectOne(itemsService.ITEMS_API_URL)
-        req.flush(expectedErrorMessage, {status: 404, statusText: 'Not Found'})
+        req.flush(expectedErrorMessage, { status: 404, statusText: 'Not Found' })
       })
 
       it('should return expected itemss when called multiple times', () => {
-        const expectedSingleResponse = [{id: 1}]
+        const expectedSingleResponse = [{ id: 1 }]
 
         itemsService.getAll().subscribe()
         itemsService.getAll().subscribe(
@@ -172,6 +172,42 @@ describe('Service: Items', () => {
         requests[1].flush(expectedSingleResponse)
         requests[2].flush(expectedItems)
         expect(requests.length).toEqual(3);
+      })
+
+    })
+
+    describe('loadItem()', () => {
+      const expectedItem: ItemInterface = { id: 1 }
+      const loadedItem: ItemInterface[] = [{ id: expectedItem.id }]
+      const makeUrl = (id: number) => `${itemsService.ITEMS_API_URL}?id=${id}`;
+
+      it('should return the expected item when it is called with an item id', (done) => {
+
+        itemsService.loadItem(expectedItem.id).subscribe(
+          item => {
+            expect(item).toEqual(expectedItem)
+            done()
+          },
+          fail
+        )
+
+        const req = httpTestingController.expectOne(makeUrl(expectedItem.id))
+        expect(req.request.method).toEqual('GET')
+
+        req.flush(loadedItem)
+      })
+
+      it('return an user friendly error message when the API call fails', () => {
+        const expectedErrorMessage = 'Ouch 404'
+        const dummyId = 1
+
+        itemsService.loadItem(dummyId).subscribe(
+          items => fail('💥 error'),
+          error => expect(error.message).toContain(expectedErrorMessage)
+        )
+
+        const req = httpTestingController.expectOne(makeUrl(dummyId))
+        req.flush(expectedErrorMessage, { status: 404, statusText: 'Not Found' })
       })
 
     })

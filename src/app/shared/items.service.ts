@@ -54,8 +54,8 @@ export class ItemsService {
           const searchRes = item ? `fetched` : `did not find`
           this.log(`${searchRes} item id=${JSON.stringify(item)}`)
         }),
-        catchError(this.handleError)
-      )
+        catchError(this.handleError('loadItem'))
+      ) as Observable<ItemInterface>
   }
 
   create(item: ItemInterface): Observable<ItemInterface> {
