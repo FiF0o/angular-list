@@ -212,6 +212,47 @@ describe('Service: Items', () => {
 
     })
 
+    describe('create()', () => {
+      it('should create the expected item', (done) => {
+        let expectedItem: ItemInterface = { id: 1 }
+
+        itemsService.create(expectedItem)
+          .subscribe(
+            item => {
+              expect(item).toEqual(expectedItem)
+              done()
+            }
+          )
+
+        const stubReq = httpTestingController.expectOne(itemsService.ITEMS_API_URL)
+
+        expect(stubReq.request.method).toEqual('POST')
+        expect(stubReq.request.body).toEqual(expectedItem)
+
+        stubReq.flush(expectedItem)
+      })
+
+      it('should return an user friendly message when the call fails', (done) => {
+        let expectedItem: ItemInterface = { id: 1 }
+        let expectedErrorMsg = 'boom, post failed, 404'
+
+        itemsService.create(expectedItem)
+          .subscribe(
+            _ => fail('pwned 😭'),
+            e => {
+              expect(e.message).toContain(expectedErrorMsg)
+              done()
+            }
+          )
+
+        const stubReq = httpTestingController.expectOne(itemsService.ITEMS_API_URL)
+
+        expect(stubReq.request.method).toEqual('POST')
+        stubReq.flush(expectedErrorMsg, { status: 404, statusText: 'Not Found' })
+      })
+
+    })
+
   })
 
 

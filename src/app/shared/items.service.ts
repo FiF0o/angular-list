@@ -59,12 +59,16 @@ export class ItemsService {
   }
 
   create(item: ItemInterface): Observable<ItemInterface> {
-    console.log('posting', item)
-    //TODO Pipe and add catch error
     return this.http.post<ItemInterface>(`${this.ITEMS_API_URL}`, item, httpOptions)
       .pipe(
-        catchError(this.handleError)
-      )
+        tap(
+          (item: ItemInterface) => {
+            const postRes = item ? `created` : `could not create`
+            this.log(`${postRes} item: ${JSON.stringify(item)}`)
+          }
+        ),
+        catchError(this.handleError('create'))
+      ) as Observable<ItemInterface>
   }
 
   delete(id: number): Observable<{}> {
