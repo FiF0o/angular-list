@@ -71,8 +71,14 @@ export class ItemsService {
       ) as Observable<ItemInterface>
   }
 
+  // TODO Add middleware to intercept the request and send something back (id) with the 200 status
+  // We want to make sure the request worked
   delete(id: number): Observable<{}> {
     return this.http.delete(`${this.ITEMS_API_URL}${id}`)
+      .pipe(
+        _ => _,
+        catchError(this.handleError())
+      )
   }
 
   search(term: string): Observable<ItemInterface[]>{

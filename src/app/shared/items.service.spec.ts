@@ -253,6 +253,24 @@ describe('Service: Items', () => {
 
     })
 
+    describe('delete()', () => {
+      it('should successfully delete an item by returning 200', (done) => {
+        const itemToBeDeleted = 1
+        const expectedItem = {}
+        itemsService.delete(itemToBeDeleted).subscribe(
+          item => {
+            expect(item).toEqual(expectedItem)
+            done()
+          }
+        )
+        const stubReq = httpTestingController.expectOne(`${itemsService.ITEMS_API_URL}${itemToBeDeleted}`)
+
+        expect(stubReq.request.method).toEqual('DELETE')
+
+        stubReq.flush(expectedItem)
+      })
+    })
+
   })
 
 
