@@ -11,7 +11,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "server": "json-server server/api/db.json --routes server/routes.json --watch"
+    "server": "node ./server/api/index.js"
   },
   "private": true,
   "dependencies": {
